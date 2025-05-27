@@ -17,7 +17,7 @@
     build-essential
 
 # 获取 llama.cpp 源代码
-!git --depth 1 clone https://github.com/ggml-org/llama.cpp.git
+!git clone --depth 1 https://github.com/ggml-org/llama.cpp.git
 
 # 编译基于 cpu 的 llama.cpp 轻量级静态库
 !cd ./llama.cpp  && \
@@ -32,9 +32,8 @@
     cmake --build . --config Release -j $(nproc)
 
 # 执行脚本所需的 python 依赖库
-%pip install -qU numpy transformers torch==2.6.0 sentencepiece \
-        --index-url https://pypi.tuna.tsinghua.edu.cn/simple
-
+%pip install -qU numpy transformers sentencepiece 
+%pip install -qU torch==2.6.0 --index-url https://download.pytorch.org/whl/cpu
 
 # 将 ./merged_model 的 hf 格式模型转为 GGUF 格式的 ./gguf_model
 !python ./llama.cpp/convert_hf_to_gguf.py \
